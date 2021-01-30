@@ -16,7 +16,7 @@ public class charactermov : MonoBehaviour
     bool onetimejump = true;
     bool onetimedamage = false;
     bool onetimedeath = true;
-    public bool underattack= false;
+    public bool underattack,underattack2 = false;
     public bool onetimeunderattack;
     public Slider healthbar, staminabar;
     GameObject monsters;
@@ -163,15 +163,17 @@ public class charactermov : MonoBehaviour
         if (transform.GetComponent<CapsuleCollider2D>().IsTouching(col))
         {
             if ("batmonster" == col.gameObject.tag)
-            { animtorr.SetTrigger("takehit"); healthbar.value -= 10f; }
+            { animtorr.SetTrigger("takehit"); healthbar.value -= 15f; }
         }
         if (transform.GetComponent<CapsuleCollider2D>().IsTouching(col))
         {
             if ("mushmonster" == col.gameObject.tag)
             { animtorr.SetTrigger("takehit"); healthbar.value -= 15f; }
-
-            //if ("mushmonsterattack" == col.gameObject.tag)
-            //{ animtorr.SetTrigger("takehit"); }
+        }
+        if (transform.GetComponent<CapsuleCollider2D>().IsTouching(col))
+        {
+            if ("goblinmonster" == col.gameObject.tag)
+            { animtorr.SetTrigger("takehit"); healthbar.value -= 10f; }
         }
     }
     void OnTriggerStay2D(Collider2D col)
@@ -201,13 +203,31 @@ public class charactermov : MonoBehaviour
                 { col.GetComponent<mushmonster>().health = col.GetComponent<mushmonster>().health - 15; col.GetComponent<mushmonster>().takehit = true; onetimedamage = false; }
             }
 
+            if ("goblinmonster" == col.gameObject.tag)
+            {
+
+                if (animtorr.GetCurrentAnimatorStateInfo(0).IsName("Attack1") && onetimedamage)
+                { col.GetComponent<goblinmonster>().health = col.GetComponent<goblinmonster>().health - 10; col.GetComponent<goblinmonster>().takehit = true; onetimedamage = false; }
+                if (animtorr.GetCurrentAnimatorStateInfo(0).IsName("Attack2") && onetimedamage)
+                { col.GetComponent<goblinmonster>().health = col.GetComponent<goblinmonster>().health - 20; col.GetComponent<goblinmonster>().takehit = true; onetimedamage = false; }
+                if (animtorr.GetCurrentAnimatorStateInfo(0).IsName("Attack3") && onetimedamage)
+                { col.GetComponent<goblinmonster>().health = col.GetComponent<goblinmonster>().health - 15; col.GetComponent<goblinmonster>().takehit = true; onetimedamage = false; }
+            }
         }
         if (transform.GetComponent<CapsuleCollider2D>().IsTouching(col)&&underattack)
         {
-            Debug.Log("test");
+            Debug.Log("testmush");
             if ("mushmonsterattack" == col.gameObject.tag)
             { animtorr.SetTrigger("takehit"); healthbar.value -= 20f; }
             underattack = false;
+        }
+
+        if (transform.GetComponent<CapsuleCollider2D>().IsTouching(col) && underattack2)
+        {
+            Debug.Log("testgoblin");
+            if ("goblinmonsterattack" == col.gameObject.tag)
+            { animtorr.SetTrigger("takehit"); healthbar.value -= 15f; }
+            underattack2 = false;
         }
     }
     void OnTriggerExit2D(Collider2D col)

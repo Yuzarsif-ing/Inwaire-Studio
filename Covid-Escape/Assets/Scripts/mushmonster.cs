@@ -29,6 +29,7 @@ public class mushmonster : MonoBehaviour
     GameObject player;
     RaycastHit2D hit;
     Animator animtor;
+    ParticleSystem blood;
     void Start()
     {
         sprender = GetComponent<SpriteRenderer>();
@@ -37,6 +38,7 @@ public class mushmonster : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("character");
         vec = new Vector3(-1.2f, 0, 0);
         animtor = transform.GetComponent<Animator>();
+        blood = transform.GetChild(1).GetComponent<ParticleSystem>();
     }
 
 
@@ -142,6 +144,7 @@ public class mushmonster : MonoBehaviour
 
         if (!(health <= 0) && takehit)
         {
+            blood.Play();
             animtor.SetBool("takehit", true);
             vec = Vector3.zero;
         }
@@ -158,6 +161,7 @@ public class mushmonster : MonoBehaviour
 
         if (health <= 0 && onetimework)
         {
+            blood.Play();
             vec = Vector3.zero;
             animtor.SetBool("death", true);
             onetimework = false;
@@ -187,7 +191,7 @@ public class mushmonster : MonoBehaviour
 
     public void death()
     {
-        Destroy(this.gameObject);
+        Destroy(transform.parent.gameObject);
     }
 
     public void takehitt()

@@ -19,12 +19,14 @@ public class batmonster : MonoBehaviour
     Vector3 vec;
     Vector3 vecscale = new Vector3(1, 1, 1);
     Transform monster;
+    ParticleSystem bloodeffect;
     void Start()
     {
         sprender = GetComponent<SpriteRenderer>();
         rbmonster = GetComponent<Rigidbody2D>();
         monster = GetComponent<Transform>();
         vec = new Vector3(-1.5f, 0, 0);
+        bloodeffect = transform.GetChild(0).GetComponent<ParticleSystem>();
     }
 
     
@@ -60,7 +62,7 @@ public class batmonster : MonoBehaviour
 
             if (animtimerhit == animtakehit.Length )
             {
-                animtimerhit = 0; takehit = false;
+                animtimerhit = 0; bloodeffect.Play(); takehit = false;
             }
             timer = 0;
         }
@@ -72,7 +74,8 @@ public class batmonster : MonoBehaviour
             if (animtimerdead == animdead.Length)
             {
                 wait();
-                Destroy(this.gameObject); animtimerdead = 0; onetimework=false;
+                bloodeffect.Play();
+                Destroy(transform.parent.gameObject); animtimerdead = 0; onetimework=false;
             }
             timer = 0;
         }

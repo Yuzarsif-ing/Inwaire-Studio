@@ -10,6 +10,8 @@ TagManager:
   - mushmonster
   - character
   - mushmonsterattack
+  - goblinmonster
+  - goblinmonsterattack
   layers:
   - Default
   - TransparentFX
