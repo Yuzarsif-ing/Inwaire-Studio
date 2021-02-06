@@ -19,10 +19,13 @@ public class goblinmonster : MonoBehaviour
     Vector3 vecsave = new Vector3(-2.5f, 0, 0);
     Vector3 vecscale = new Vector3(0.8f, 0.8f, 0.8f);
     Transform monster;
+    public Transform bombtransform;
     GameObject player;
     RaycastHit2D hit;
     Animator animtor;
     ParticleSystem blood;
+    public GameObject bomb;
+
     void Start()
     {
         sprender = GetComponent<SpriteRenderer>();
@@ -206,6 +209,9 @@ public class goblinmonster : MonoBehaviour
 
     public void attack()
     { player.GetComponent<charactermov>().underattack2 = true; }
+
+    public void bombattacck()
+    { Instantiate(bomb, bombtransform.transform.position, bomb.transform.rotation); }
 
     IEnumerator wait()
     {
