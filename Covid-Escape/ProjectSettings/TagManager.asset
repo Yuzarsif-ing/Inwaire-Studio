@@ -12,6 +12,7 @@ TagManager:
   - mushmonsterattack
   - goblinmonster
   - goblinmonsterattack
+  - goblinbomb
   layers:
   - Default
   - TransparentFX
@@ -22,7 +23,7 @@ TagManager:
   - 
   - 
   - player
-  - 
+  - monsters
   - 
   - 
   - 
