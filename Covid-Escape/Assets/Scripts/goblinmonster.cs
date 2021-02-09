@@ -8,10 +8,10 @@ public class goblinmonster : MonoBehaviour
     public LayerMask playermask;
     public int health;
     float timer = 0;
-    float attacktimer, attacktimer1 = 0;
+    float attacktimer = 0;
     bool onetimework = true;
-    bool onetimeattack,onetimeattack1 = false;
-    bool monsterattack, monsterattack1 = false;
+    bool onetimeattack = false;
+    bool monsterattack = false;
     public bool takehit = false;
     SpriteRenderer sprender;
     Rigidbody2D rbmonster;
@@ -19,13 +19,10 @@ public class goblinmonster : MonoBehaviour
     Vector3 vecsave = new Vector3(-2.5f, 0, 0);
     Vector3 vecscale = new Vector3(0.8f, 0.8f, 0.8f);
     Transform monster;
-    public Transform bombtransform;
     GameObject player;
     RaycastHit2D hit;
     Animator animtor;
     ParticleSystem blood;
-    public GameObject bomb;
-
     void Start()
     {
         sprender = GetComponent<SpriteRenderer>();
@@ -47,16 +44,7 @@ public class goblinmonster : MonoBehaviour
         Debug.DrawLine(transform.position, hit.point, Color.green);
         //Debug.Log(hit.distance);
 
-        if (8f>hit.distance&&hit.distance > 4f)
-        {
-            onetimeattack1 = true; monsterattack1 = true; vec = Vector3.zero;
-            if (0.05f < attacktimer1 && attacktimer1 < 2f)
-            { animtor.SetBool("idle", true); }
-
-
-        }
-
-        else if (hit.distance < 1.4f)
+        if (hit.distance < 1.4f)
         {
             onetimeattack = true; monsterattack = true; vec = Vector3.zero;
             if (0.05f < attacktimer && attacktimer < 0.09f)
@@ -64,7 +52,6 @@ public class goblinmonster : MonoBehaviour
 
 
         }
-        
         else { animtor.SetBool("idle", false); }
 
     }
@@ -138,8 +125,8 @@ public class goblinmonster : MonoBehaviour
 
     void animation()
     {
-        if (monsterattack|| monsterattack1)
-        { attacktimer += Time.deltaTime; attacktimer1 += Time.deltaTime; }
+        if (monsterattack)
+        { attacktimer += Time.deltaTime; }
 
         if (!(health <= 0) && takehit)
         {
@@ -158,15 +145,6 @@ public class goblinmonster : MonoBehaviour
         }
         else { animtor.SetBool("attack", false); }
 
-        if (!(health <= 0) && !takehit && onetimeattack1 && monsterattack1 && attacktimer1 > 2f)
-        {
-            animtor.SetBool("bombattack", true);
-            monsterattack1 = false;
-            onetimeattack1 = false;
-            attacktimer1 = 0;
-        }
-        else { animtor.SetBool("bombattack", false); }
-
         if (health <= 0 && onetimework)
         {
             blood.Play();
@@ -175,8 +153,8 @@ public class goblinmonster : MonoBehaviour
             onetimework = false;
         }
 
-        if (player.transform.position.x - transform.position.x > 0 && transform.localScale.x > 0 && (hit.distance < 1.4f|| 8f > hit.distance && hit.distance > 4f)) { transform.rotation = Quaternion.Euler(0, -180, 0); }
-        else if (player.transform.position.x - transform.position.x < 0 && transform.localScale.x < 0 && (hit.distance < 1.4f|| 8f > hit.distance && hit.distance > 4f)) { transform.rotation = Quaternion.Euler(0, -180, 0); }
+        if (player.transform.position.x - transform.position.x > 0 && transform.localScale.x > 0 && hit.distance < 1.4f) { transform.rotation = Quaternion.Euler(0, -180, 0); }
+        else if (player.transform.position.x - transform.position.x < 0 && transform.localScale.x < 0 && hit.distance < 1.4f) { transform.rotation = Quaternion.Euler(0, -180, 0); }
         else { transform.rotation = Quaternion.Euler(0, 0, 0); }
 
         StartCoroutine(wait());
@@ -210,12 +188,9 @@ public class goblinmonster : MonoBehaviour
     public void attack()
     { player.GetComponent<charactermov>().underattack2 = true; }
 
-    public void bombattacck()
-    { Instantiate(bomb, bombtransform.transform.position, bomb.transform.rotation); }
-
     IEnumerator wait()
     {
         yield return new WaitForSeconds(0.2f);
-        if (!onetimeattack1 && !monsterattack1 && !onetimeattack && !monsterattack && !takehit && !(health <= 0)) { vec = vecsave; }
+        if (!onetimeattack && !monsterattack && !takehit && !(health <= 0)) { vec = vecsave; }
     }
 }

@@ -175,11 +175,6 @@ public class charactermov : MonoBehaviour
             if ("goblinmonster" == col.gameObject.tag)
             { animtorr.SetTrigger("takehit"); healthbar.value -= 10f; }
         }
-        if (transform.GetComponent<CapsuleCollider2D>().IsTouching(col))
-        {
-            if ("goblinbomb" == col.gameObject.tag)
-            { animtorr.SetTrigger("takehit"); healthbar.value -= 20f; }
-        }
     }
     void OnTriggerStay2D(Collider2D col)
     {
