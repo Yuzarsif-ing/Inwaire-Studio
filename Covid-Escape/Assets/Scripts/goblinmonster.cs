@@ -47,7 +47,7 @@ public class goblinmonster : MonoBehaviour
         Debug.DrawLine(transform.position, hit.point, Color.green);
         //Debug.Log(hit.distance);
 
-        if (8f>hit.distance&&hit.distance > 4f)
+        if (8f>hit.distance && hit.distance > 4f)
         {
             onetimeattack1 = true; monsterattack1 = true; vec = Vector3.zero;
             if (0.05f < attacktimer1 && attacktimer1 < 2f)

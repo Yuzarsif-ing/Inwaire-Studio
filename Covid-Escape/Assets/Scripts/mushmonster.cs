@@ -51,7 +51,7 @@ public class mushmonster : MonoBehaviour
         Debug.DrawLine(transform.position,hit.point,Color.green);
         //Debug.Log(hit.distance);
 
-        if (hit.distance < 1.4f)
+        if (hit.distance < 1.2f)
         {
             onetimeattack = true; monsterattack = true; vec = Vector3.zero;
             if (0.05f< attacktimer &&attacktimer < 0.09f)
@@ -167,8 +167,8 @@ public class mushmonster : MonoBehaviour
             onetimework = false;
         }
 
-        if (player.transform.position.x - transform.position.x > 0 && transform.localScale.x > 0 && hit.distance < 1.4f) { transform.rotation = Quaternion.Euler(0, -180, 0); }
-        else if (player.transform.position.x - transform.position.x < 0 && transform.localScale.x < 0 && hit.distance < 1.4f) { transform.rotation = Quaternion.Euler(0, -180, 0); }
+        if (player.transform.position.x - transform.position.x > 0 && transform.localScale.x > 0 && hit.distance < 1.2f) { transform.rotation = Quaternion.Euler(0, -180, 0); }
+        else if (player.transform.position.x - transform.position.x < 0 && transform.localScale.x < 0 && hit.distance < 1.2f) { transform.rotation = Quaternion.Euler(0, -180, 0); }
         else {  transform.rotation = Quaternion.Euler(0, 0, 0);}
 
         StartCoroutine(wait());
